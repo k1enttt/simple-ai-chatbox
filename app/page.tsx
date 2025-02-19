@@ -1,11 +1,12 @@
 "use client";
 
-import { getGeminiResponse } from "@/lib/gemini-pro";
+import { getGeminiResponse } from "@/lib/gemini-chat";
 import { useEffect, useRef, useState } from "react";
 import { marked } from "marked";
+import type { Content } from "@google/generative-ai";
 
 export default function Home() {
-  const [chatMessages, setChatMessages] = useState<string[]>([]);
+  const [chatMessages, setChatMessages] = useState<Content[]>([]);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Load chat messages from local storage
@@ -32,17 +33,13 @@ export default function Home() {
   /** Get the response for the prompt */
   const sendPrompt = async (message: string) => {
     // Save the prompt in the chat messages
-    setChatMessages((prev) => [...prev, message]);
+    setChatMessages((prev) => [...prev, {parts: [{text: message}], role: "user"}]);
 
     // Add a typing indicator
-    setChatMessages((prev) => [...prev, "Gemini is typing..."]);
-    const response = await getGeminiResponse(message).then((res) => {
-      setChatMessages((prev) => [...prev.slice(0, prev.length - 1)]);
-      return res;
-    });
+    const response = await getGeminiResponse(message, chatMessages);
 
     // Add the response to the chat messages
-    setChatMessages((prev) => [...prev, response]);
+    setChatMessages((prev) => [...prev, {parts: [{text: response}], role: "model"}]);
   };
 
   /** Clear all the messages and the prompt */
@@ -62,7 +59,7 @@ export default function Home() {
               index % 2 === 0 ? "text-black" : "text-blue-500"
             }`}
           >
-            <div dangerouslySetInnerHTML={{ __html: marked(message) }} />
+            <div dangerouslySetInnerHTML={{ __html: marked(message.parts.map(part => part.text).join(' ')) }} />
           </div>
         ))}
       </div>
