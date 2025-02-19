@@ -31,8 +31,17 @@ export default function Home() {
 
   /** Get the response for the prompt */
   const sendPrompt = async (message: string) => {
+    // Save the prompt in the chat messages
     setChatMessages((prev) => [...prev, message]);
-    const response = await getGeminiResponse(message);
+
+    // Add a typing indicator
+    setChatMessages((prev) => [...prev, "Gemini is typing..."]);
+    const response = await getGeminiResponse(message).then((res) => {
+      setChatMessages((prev) => [...prev.slice(0, prev.length - 1)]);
+      return res;
+    });
+
+    // Add the response to the chat messages
     setChatMessages((prev) => [...prev, response]);
   };
 
@@ -61,6 +70,7 @@ export default function Home() {
         <textarea
           ref={textareaRef}
           cols={3}
+          placeholder="Enter your prompt here"
           className="w-full text-black resize-none focus:outline-none focus:border-none"
         />
         <div className="w-full h-fit flex gap-1 justify-end">
