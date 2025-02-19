@@ -21,9 +21,10 @@ cp .env.template .env # For Mac and Linux
 ```
 
 After that, replace **"your_gemini_api_key_here"** with your actual Gemini API key. To find your key, follow these steps:
-1. Create a Google AI Studio account (if you're already have one, skip this step)
-2. Click the 'Get API key' button on the left sidebar.
-3. Click the 'Create API key' button and congrats, you have a Gemini API key.
+1. Go to https://aistudio.google.com/ 
+2. Create a Google AI Studio account (if you're already have one, skip this step)
+3. Click the 'Get API key' button on the left sidebar.
+4. Click the 'Create API key' button and congrats, you have a Gemini API key.
 
 Finally, run the development server:
 
