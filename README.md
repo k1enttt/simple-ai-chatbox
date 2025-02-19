@@ -1,8 +1,31 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+# Simple Gemini Chatbox
+
+Simple Gemini Chatbox is a web application built with Next.js that leverages the Gemini API to provide real-time chat functionality.
+
 ## Getting Started
 
-First, run the development server:
+First, install the dependencies:
+
+```bash
+npm i
+```
+
+Then, create a environment file to store your api key:
+
+```bash
+copy .env.template .env # For Window
+
+cp .env.template .env # For Mac and Linux
+```
+
+After that, replace **"your_gemini_api_key_here"** with your actual Gemini API key. To find your key, follow these steps:
+1. Create a Google AI Studio account (if you're already have one, skip this step)
+2. Click the 'Get API key' button on the left sidebar.
+3. Click the 'Create API key' button and congrats, you have a Gemini API key.
+
+Finally, run the development server:
 
 ```bash
 npm run dev
